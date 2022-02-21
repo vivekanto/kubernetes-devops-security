@@ -7,7 +7,7 @@ pipeline {
   imageName = "vivekanto/numeric-app:${GIT_COMMIT}"
   applicationURL = "http://devsecopsk8s.eastus.cloudapp.azure.com"
   applicationURI = "/increment/99"
-}
+  }
 
   stages {
       stage('Build Artifact') {
@@ -141,8 +141,9 @@ pipeline {
         jacoco execPattern: 'target/jacoco.exec'
         pitmutation mutationStatsFile: '**/target/pit-reports/**/mutations.xml'
         dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
+        publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'owasp-zap-report', reportFiles: 'zap_report.html', reportName: 'OWASP ZAP HTML Report', reportTitles: 'OWASP ZAP HTML Report'])
       }
-
+    }
     // success {
 
     // }
@@ -150,6 +151,5 @@ pipeline {
     // failure {
 
     // }
-    }
+}    
 
-}
